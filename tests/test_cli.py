@@ -7,10 +7,12 @@ from websole.app import cli
 
 runner = CliRunner()
 
+
 def test_version():
     result = runner.invoke(cli, ["--version"])
     assert websole.__version__ in result.stdout
     assert result.exit_code == 0
+
 
 def test_options():
     cmd = "--dry -h 0.0.0.0 -p 80 -w '' -i bi-0-circle-fill:http://localhost -l Link:http://localhost echo 'Hello Websole'"

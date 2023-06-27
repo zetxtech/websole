@@ -73,6 +73,7 @@ def console():
         "console.html", brand=app.config["brand"], icons=app.config["icons"], links=app.config["links"]
     )
 
+
 @app.route("/login", methods=["GET"])
 def login():
     webpass = app.config.get("webpass", None)
@@ -251,6 +252,7 @@ def check_config(config: dict):
     else:
         return None
 
+
 def configure(dry=False, **kw):
     default_config = {
         "command": None,
@@ -264,33 +266,37 @@ def configure(dry=False, **kw):
     for k, v in default_config.items():
         kw.setdefault(k, v)
     if not kw["links"]:
-        kw["links"].append(
-            {"label": "Powered by Websole", "url": "https://github.com/jackzzs/websole/"}
-        )
+        kw["links"].append({"label": "Powered by Websole", "url": "https://github.com/jackzzs/websole/"})
     if dry:
         print(json.dumps(kw))
         exit(0)
     else:
         app.config.update(kw)
 
+
 def serve(debug=False):
     host = app.config.get("host", "localhost")
     port = app.config.get("port", 1818)
-    
-    if host == '0.0.0.0' and not os.environ.get('_WEB_ISOLATED', None):
-        logger.warning(f"Web console host set to 0.0.0.0 and will listen on all interfaces, please pay attention to security issues.")
+
+    if host == "0.0.0.0" and not os.environ.get("_WEB_ISOLATED", None):
+        logger.warning(
+            f"Web console host set to 0.0.0.0 and will listen on all interfaces, please pay attention to security issues."
+        )
 
     logger.info(f"Web console started at {host}:{port}.")
     socketio.run(app, port=port, host=host, debug=debug)
+
 
 class TyperCommand(typer.core.TyperCommand):
     def get_usage(self, ctx) -> str:
         return super().get_usage(ctx) + " COMMAND"
 
+
 def version(version):
     if version:
         print(__version__)
         raise typer.Exit()
+
 
 @cli.command(cls=TyperCommand, context_settings={"ignore_unknown_options": True, "allow_extra_args": True})
 def main(
