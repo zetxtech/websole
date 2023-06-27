@@ -1,3 +1,4 @@
+import json
 import os
 from pathlib import Path
 import pty
@@ -18,6 +19,8 @@ from schema import Optional, Or, Schema, SchemaError
 from flask import Flask, render_template, request, redirect, url_for, jsonify, abort
 from flask_socketio import SocketIO
 from flask_login import LoginManager, login_user, login_required, current_user
+
+from . import __version__
 
 logger.disable("websole")
 
@@ -70,12 +73,16 @@ def console():
         "console.html", brand=app.config["brand"], icons=app.config["icons"], links=app.config["links"]
     )
 
-
 @app.route("/login", methods=["GET"])
 def login():
-    return render_template(
-        "login.html", brand=app.config["brand"], icons=app.config["icons"], links=app.config["links"]
-    )
+    webpass = app.config.get("webpass", None)
+    if webpass is not None and not webpass:
+        login_user(DummyUser())
+        return redirect(request.args.get("next") or url_for("index"))
+    else:
+        return render_template(
+            "login.html", brand=app.config["brand"], icons=app.config["icons"], links=app.config["links"]
+        )
 
 
 @app.route("/login", methods=["POST"])
@@ -244,8 +251,7 @@ def check_config(config: dict):
     else:
         return None
 
-
-def serve(debug=False, **kw):
+def configure(dry=False, **kw):
     default_config = {
         "command": None,
         "host": "localhost",
@@ -255,27 +261,36 @@ def serve(debug=False, **kw):
         "icons": [],
         "links": [],
     }
-    app.config.update(kw)
-
     for k, v in default_config.items():
-        app.config.setdefault(k, v)
-
-    if not app.config["links"]:
-        app.config["links"].append(
+        kw.setdefault(k, v)
+    if not kw["links"]:
+        kw["links"].append(
             {"label": "Powered by Websole", "url": "https://github.com/jackzzs/websole/"}
         )
+    if dry:
+        print(json.dumps(kw))
+        exit(0)
+    else:
+        app.config.update(kw)
 
+def serve(debug=False):
     host = app.config.get("host", "localhost")
     port = app.config.get("port", 1818)
+    
+    if host == '0.0.0.0' and not os.environ.get('_WEB_ISOLATED', None):
+        logger.warning(f"Web console host set to 0.0.0.0 and will listen on all interfaces, please pay attention to security issues.")
 
     logger.info(f"Web console started at {host}:{port}.")
     socketio.run(app, port=port, host=host, debug=debug)
-
 
 class TyperCommand(typer.core.TyperCommand):
     def get_usage(self, ctx) -> str:
         return super().get_usage(ctx) + " COMMAND"
 
+def version(version):
+    if version:
+        print(__version__)
+        raise typer.Exit()
 
 @cli.command(cls=TyperCommand, context_settings={"ignore_unknown_options": True, "allow_extra_args": True})
 def main(
@@ -333,6 +348,19 @@ def main(
         show_envvar=False,
         help="Serve web console in debug mode.",
     ),
+    dry: bool = typer.Option(
+        False,
+        "--dry",
+        help="Show config only, do not start web console.",
+    ),
+    version: bool = typer.Option(
+        None,
+        "--version",
+        "-v",
+        callback=version,
+        is_eager=True,
+        help="Print version and exit.",
+    ),
 ):
     """
     Websole is a tool to expose command-line tools through web-based console.
@@ -379,7 +407,8 @@ def main(
         logger.error("Error during parsing icons and links, please check syntax.")
         exit(1)
 
-    serve(debug=debug, **config)
+    configure(debug=debug, dry=dry, **config)
+    serve()
 
 
 if __name__ == "__main__":

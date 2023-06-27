@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: websole
+    runtime: docker
+    region: singapore
+    plan: free
+    branch: stable
+    healthCheckPath: /healthz
+    envVars:
+      - key: _WEB_HOST
+        value: 0.0.0.0
+      - key: _WEB_ISOLATED
+        value: 1
+      - key: _WEB_PASS
+        sync: false
+      - key: _WEB_BRAND
+        sync: False
+    autoDeploy: true

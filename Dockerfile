@@ -13,5 +13,7 @@ COPY --from=builder /opt/venv /opt/venv
 
 WORKDIR /app
 ENV PATH="/opt/venv/bin:$PATH"
+ENV _WEB_HOST 0.0.0.0
+ENV _WEB_ISOLATED 1
 
 ENTRYPOINT ["websole"]
