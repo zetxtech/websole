@@ -14,4 +14,4 @@ COPY --from=builder /opt/venv /opt/venv
 WORKDIR /app
 ENV PATH="/opt/venv/bin:$PATH"
 
-ENTRYPOINT ["python", "-m", "websole"]
+ENTRYPOINT ["websole"]

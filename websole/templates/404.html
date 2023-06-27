@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="googlebot" content="noindex, nofollow">
+<meta name="baiduspider" content="noindex, nofollow">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Page Not Found - {{ brand|default("Web console",true)|capitalize }}</title>
+    <link rel="icon" type="image/svg+xml" sizes="160x160" href="assets/img/illustrations/logo-only.svg">
+    <link rel="icon" type="image/svg+xml" sizes="160x160" href="assets/img/illustrations/logo-only.svg">
+    <link rel="icon" type="image/svg+xml" sizes="160x160" href="assets/img/illustrations/logo-only.svg">
+    <link rel="icon" type="image/svg+xml" sizes="160x160" href="assets/img/illustrations/logo-only.svg">
+    <link rel="icon" type="image/svg+xml" sizes="160x160" href="assets/img/illustrations/logo-only.svg">
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&amp;display=swap">
+    <link rel="stylesheet" href="assets/css/icons.css">
+    <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+
+<body>
+    <nav class="navbar navbar-light navbar-expand-md fixed-top navbar-shrink py-3" id="mainNav">
+        <div class="container"><a class="navbar-brand d-flex align-items-center" href="/"><span>{{ brand|default("Web console",true)|capitalize }}</span></a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navcol-1">
+                <ul class="navbar-nav mx-auto"></ul>
+                <a class="btn btn-primary shadow" role="button" href="/console">Dashboard</a>
+            </div>
+        </div>
+    </nav>
+    <section class="py-5 mt-5">
+        <div class="container">
+            <div class="row row-cols-1 d-flex justify-content-center align-items-center">
+                <div class="col-md-10 text-center"><img class="img-fluid w-100" src="assets/img/illustrations/404.svg"></div>
+                <div class="col text-center">
+                    <h2 class="display-3 fw-bold mb-4">Page Not Found</h2>
+                    <p class="fs-4 text-muted">Fusce adipiscing sit, torquent porta pulvinar.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <footer class="text-center py-4">
+        <div class="container">
+            <div class="row row-cols-1 row-cols-lg-3">
+                <div class="col">
+                    <p class="text-muted my-2">Copyright © 2023 {{ brand|capitalize }}</p>
+                </div>
+                <div class="col">
+                    <ul class="list-inline my-2">
+                        {% for icon in icons %}
+                        <li class="list-inline-item me-4">
+                            <a href="{{ icon.url }}" target="_blank" rel="noopener noreferrer">
+                                <div class="bs-icon-circle bs-icon-primary bs-icon">
+                                    <i class="{{ icon.icon }}"></i>
+                                </div>
+                            </a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="col">
+                    <ul class="list-inline my-2">
+                        {% for link in links %}
+                        <li class="list-inline-item"><a class="link-primary" href="{{ link.url }}">{{ link.label }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="assets/js/script.js"></script>
+</body>
+
+</html>

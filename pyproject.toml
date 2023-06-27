@@ -1,0 +1,61 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "websole"
+version = "1.0.0"
+authors = [
+    {name = "jackzzs", email = "jackzzs@outlook.com"},
+]
+description = "A solution to expose command-line tools through web-based console, through docker."
+keywords = [
+    "cli",
+    "web",
+    "web console",
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Environment :: Web Environment",
+    "Intended Audience :: Developers",
+    "Natural Language :: English",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.6",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+]
+requires-python = ">=3.6"
+dependencies = [
+    "typer",
+    "loguru",
+    "pyyaml",
+    "schema",
+    "flask",
+    "flask_socketio",
+    "flask_login",
+    "simple-websocket",
+    "eventlet",
+]
+
+[project.urls]
+Homepage = "https://github.com/jackzzs/websole"
+
+[project.readme]
+file = "README.md"
+content-type = "text/markdown"
+
+[project.scripts]
+websole = "websole.app:cli"
+
+[tool.setuptools]
+zip-safe = false
+
+[tool.setuptools.packages]
+find = {namespaces = false}
+
+[tool.black]
+line-length = 110
