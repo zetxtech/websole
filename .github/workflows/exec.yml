@@ -1,0 +1,5 @@
+name: Build executables
+
+on:
+  release:
+    types: [published]
