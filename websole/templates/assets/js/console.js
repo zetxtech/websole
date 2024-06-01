@@ -36,7 +36,9 @@ window.addEventListener('DOMContentLoaded', function() {
         var statusMsg = document.getElementById("status-msg");
         statusMsg.textContent = "Program Connected";
         var restartIcon = document.getElementById("restart-icon");
-        restartIcon.style.animationPlayState = "paused";
+        if (restartIcon) {
+            restartIcon.style.animationPlayState = "paused";
+        }
         console.info("Web console connected: ", term.cols, term.rows);
         term.focus();
         term.clear();
@@ -51,19 +53,23 @@ window.addEventListener('DOMContentLoaded', function() {
         var statusMsg = document.getElementById("status-msg");
         statusMsg.textContent = "Program Disconnected";
         var restartIcon = document.getElementById("restart-icon");
-        restartIcon.style.animationPlayState = "running";
+        if (restartIcon) {
+            restartIcon.style.animationPlayState = "running";
+        }
         console.info("Web console disconnected.");
     });
 
     var restartBtn = document.getElementById("restart-btn");
-    restartBtn.addEventListener('click', () => {
-        socket.emit("cmd_stop");
-        socket.disconnect();
-        var statusMsg = document.getElementById("status-msg");
-        statusMsg.textContent = "Program Restarting"
-        console.info("Web console restarting.");
-        socket.open();
-    });
+    if (restartBtn) {
+        restartBtn.addEventListener('click', () => {
+            socket.emit("cmd_stop");
+            socket.disconnect();
+            var statusMsg = document.getElementById("status-msg");
+            statusMsg.textContent = "Program Restarting"
+            console.info("Web console restarting.");
+            socket.open();
+        });
+    }
 
     function resize() {
         fit.fit();
@@ -97,16 +103,21 @@ window.addEventListener('DOMContentLoaded', function() {
         }
         if (e.ctrlKey) {
             const key = e.key.toLowerCase();
-            if (key === "v") {
-                navigator.clipboard.readText().then((toPaste) => {
-                    term.writeText(toPaste);
-                });
-                return false;
-            } else if (key === "c" || key === "x") {
-                const toCopy = term.getSelection();
-                navigator.clipboard.writeText(toCopy);
-                term.focus();
-                return false;
+            var switchUseShortcuts = document.getElementById("switch-use-shortcut");
+            if (switchUseShortcuts.checked) {
+                if (key === "v") {
+                    navigator.clipboard.readText().then((toPaste) => {
+                        term.writeText(toPaste);
+                    });
+                    return false;
+                } else if (key === "c") {
+                    const toCopy = term.getSelection();
+                    navigator.clipboard.writeText(toCopy);
+                    term.focus();
+                    return false;
+                }
+            } else {
+                return true;
             }
         }
         return true;

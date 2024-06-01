@@ -5,14 +5,14 @@
     "setupTasks": [
       {
         "name": "Installing Dependencies",
-        "command": "pip install -e ."
+        "command": "pip install -e . && pip install -r requirements_dev.txt"
       }
     ],
     // These tasks can be run from CodeSandbox. Running one will open a log in the app.
     "tasks": {
       "reinstall": {
         "name": "Retry installing dependencies",
-        "command": "pip install -e ."
+        "command": "pip install -e . && pip install -r requirements_dev.txt"
       },
       "websole": {
         "name": "Run websole with bash",
@@ -32,6 +32,22 @@
       "pre-commit": {
         "name": "Run pre-commit checks",
         "command": "pre-commit run -a"
+      },
+      "version-patch": {
+        "name": "Run bumpversion (bump patch version)",
+        "command": "bump2version patch"
+      },
+      "version-minor": {
+        "name": "Run bumpversion (bump minor version)",
+        "command": "bump2version minor"
+      },
+      "version-major": {
+        "name": "Run bumpversion (bump major version)",
+        "command": "bump2version major"
+      },
+      "push": {
+        "name": "Push to default git remote",
+        "command": "git push && git push --tags"
       }
     }
   }

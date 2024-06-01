@@ -1,0 +1,4 @@
+debugpy
+pytest
+black
+pre-commit

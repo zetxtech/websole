@@ -1,84 +1,166 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="utf-8">
-<meta name="robots" content="noindex, nofollow">
-<meta name="googlebot" content="noindex, nofollow">
-<meta name="baiduspider" content="noindex, nofollow">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="googlebot" content="noindex, nofollow" />
+    <meta name="baiduspider" content="noindex, nofollow" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
+    />
     <title>Console - {{ brand|default("Web console",true)|capitalize }}</title>
-    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&amp;display=swap">
-    <link rel="stylesheet" href="assets/css/styles.min.css">
-    <link rel="stylesheet" href="https://unpkg.com/xterm@5.2.1/css/xterm.css">
-</head>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Raleway:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&amp;display=swap"
+    />
+    <link rel="stylesheet" href="assets/css/styles.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/xterm@5.2.1/css/xterm.min.css"
+      rel="stylesheet"
+    />
+  </head>
 
-<body>
-    <nav class="navbar navbar-light navbar-expand-md fixed-top navbar-shrink py-3" id="mainNav">
-        <div class="container"><a class="navbar-brand d-flex align-items-center" href="/"><span id="brand-text">{{ brand|default("Web console",true)|capitalize }}</span></a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
-            <div class="collapse navbar-collapse" id="navcol-1">
-                <ul class="navbar-nav mx-auto"></ul><a class="btn btn-primary shadow" role="button" href="/console">Dashboard</a>
-            </div>
-        </div>
-    </nav>
-    <section class="py-5 mt-5">
+  <body>
+    <div class="d-flex flex-column vh-100">
+      <nav
+        class="navbar navbar-light navbar-expand-md navbar-shrink py-3 px-2 px-md-0"
+        id="mainNav"
+      >
         <div class="container">
-            <div class="row">
-                <div class="col-12 mx-auto">
-                    <div class="d-inline-flex reccircle bg-light my-2 px-3 align-items-center">
-                        <div id="status-icon" class="small-dot" style="border-radius: 50%;"></div>
-                        <div class="text-center">
-                            <p class="fw-semibold my-0 ms-2" id="status-msg">Program Connecting</p>
-                        </div>
-                    </div>
-                    <div></div>
-                    <div class="card" style="border-radius: 5px;height: 65vh;">
-                        <div class="card-body">
-                            <div id="terminal" class="h-100"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+          <a class="navbar-brand d-flex align-items-center" href="/">
+            {{ brand|default("Web console",true)|capitalize }}
+          </a>
+          <button
+            data-bs-toggle="collapse"
+            class="navbar-toggler"
+            data-bs-target="#navcol-1"
+          >
+            <span class="visually-hidden">Toggle navigation</span>
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navcol-1">
+            <ul class="navbar-nav mx-auto"></ul>
+            {% if not hasPassword %}
+            <a class="btn btn-primary shadow" role="button" href="/logout">
+              Logout
+            </a>
+            {% endif %}
+          </div>
         </div>
-    </section>
-    <footer class="text-center py-4">
+      </nav>
+      <div class="flex-grow-1 d-flex flex-column container">
+        <div class="d-flex justify-content-between">
+          <div
+            class="d-inline-flex reccircle bg-light my-2 px-3 align-items-center"
+          >
+            <div
+              id="status-icon"
+              class="small-dot"
+              style="border-radius: 50%"
+            >
+            </div>
+            <div class="text-center">
+              <p class="fw-semibold my-0 ms-2" id="status-msg">
+                Program Connecting
+              </p>
+            </div>
+          </div>
+          <div class="d-flex justify-content-end gap-3">
+            {% if not hideUseShortcutSwitch %}
+            <div class="form-check form-switch my-auto d-none d-md-none">
+              <input class="form-check-input" type="checkbox" role="switch" id="switch-use-shortcut" {{ "checked" if useShortcut }}>
+              <label class="form-check-label fw-semibold" style="font-size: 12px" for="switch-use-shortcut">Use Ctrl+C/V to copy/paste</label>
+            </div>
+            {% endif %}
+            {% if allowRestart %}
+            <div
+              class="d-flex d-lg-flex justify-content-end"
+              id="restart-btn"
+            >
+              <div class="bs-icon-circle bs-icon my-2 bg-light">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  idth="1em"
+                  height="1em"
+                  fill="currentColor"
+                  viewBox="0 0 16 16"
+                  class="bi bi-arrow-repeat"
+                  id="restart-icon"
+                  style="animation-play-state: paused"
+                >
+                  <path
+                    d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zm-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9z"
+                  />
+                  <path
+                    fill-rule="evenodd"
+                    d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5.002 5.002 0 0 0 8 3zM3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9H3.1z"
+                  />
+                </svg>
+              </div>
+            </div>
+            {% endif %}
+          </div>
+        </div>
+        <div class="d-flex flex-grow-1">
+          <div class="card flex-grow-1" style="border-radius: 5px">
+            <div class="card-body">
+              <div id="terminal" class="h-100"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <footer class="text-center py-4">
         <div class="container">
-            <div class="row row-cols-1 row-cols-lg-3">
-                <div class="col">
-                    <p class="text-muted my-2">Copyright © 2023 {{ brand|capitalize }}</p>
-                </div>
-                <div class="col">
-                    <ul class="list-inline my-2">
-                        {% for icon in icons %}
-                        <li class="list-inline-item me-4">
-                            <a href="{{ icon.url }}" target="_blank" rel="noopener noreferrer">
-                                <div class="bs-icon-circle bs-icon-primary bs-icon">
-                                    <i class="{{ icon.icon }}"></i>
-                                </div>
-                            </a>
-                        </li>
-                        {% endfor %}
-                    </ul>
-                </div>
-                <div class="col">
-                    <ul class="list-inline my-2">
-                        {% for link in links %}
-                        <li class="list-inline-item"><a class="link-primary" href="{{ link.url }}">{{ link.label }}</a></li>
-                        {% endfor %}
-                    </ul>
-                </div>
+          <div class="row row-cols-1 row-cols-lg-3">
+            <div class="col">
+              <p class="text-muted my-2 float-start" id="copyright-text">
+                {{ brand|capitalize }} Copyright © {{ year }}
+              </p>
             </div>
+            <div class="col">
+              <ul class="list-inline my-2">
+                {% for icon in icons %}
+                <li class="list-inline-item me-4">
+                  <a
+                    href="{{ icon.url }}"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <div class="bs-icon-circle bs-icon-primary bs-icon" style="background-color: {{ icon.color|default("#8689b0",true) }}">
+                      <i class="{{ icon.icon }}"></i>
+                    </div>
+                  </a>
+                </li>
+                {% endfor %}
+              </ul>
+            </div>
+            <div class="col">
+              <ul class="list-inline my-2 float-end">
+                {% for link in links %}
+                <li class="list-inline-item">
+                  <a class="link-primary" href="{{ link.url }}">
+                    {{ link.label }}
+                  </a>
+                </li>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
         </div>
-    </footer>
+      </footer>
+    </div>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
-    <script src="https://unpkg.com/xterm@5.2.1/lib/xterm.js"></script>
-    <script src="https://unpkg.com/xterm-addon-fit@0.7.0/lib/xterm-addon-fit.js"></script>
-    <script src="https://unpkg.com/xterm-addon-search@0.12.0/lib/xterm-addon-search.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.6.2/socket.io.min.js"></script>
-    <script src="assets/js/script.min.js"></script>
-    <script src="assets/js/console.min.js"></script>
-</body>
-
+    <script src="https://cdn.jsdelivr.net/npm/xterm@5.2.1/lib/xterm.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@xterm/addon-fit@0.10.0/lib/addon-fit.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@xterm/addon-search@0.15.0/lib/addon-search.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/socket.io@4.6.2/client-dist/socket.io.min.js"></script>
+    <script src="assets/js/script.js"></script>
+    <script src="assets/js/console.js"></script>
+  </body>
 </html>

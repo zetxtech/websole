@@ -1,0 +1,10 @@
+command: "/app/your-program.sh"
+host: 0.0.0.0
+brand: Your Program
+links:
+  - url: https://github.com/
+    label: Github
+  - url: https://baidu.com/
+    label: Blog
+webpass: 123456
+# what_is_webpass_url: https://baidu.com/

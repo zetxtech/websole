@@ -1,3 +1,13 @@
-# Webconsole
+---
+title: Websole
+emoji: ☁️
+colorFrom: indigo
+colorTo: red
+sdk: docker
+pinned: false
+app_port: 1818
+---
 
-Webconsole is a library / docker template for you to expose command-line tools via web-based console.
+# Websole
+
+Websole is a web-based console for you to expose command-line tools to a web server.

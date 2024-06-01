@@ -21,14 +21,13 @@ classifiers = [
     "Natural Language :: English",
     "License :: OSI Approved :: MIT License",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.6",
-    "Programming Language :: Python :: 3.7",
     "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
 ]
-requires-python = ">=3.6"
+requires-python = ">=3.8"
 dependencies = [
     "typer",
     "loguru",
@@ -38,7 +37,8 @@ dependencies = [
     "flask_socketio",
     "flask_login",
     "simple-websocket",
-    "eventlet",
+    "gevent",
+    "gevent-websocket",
 ]
 
 [project.urls]

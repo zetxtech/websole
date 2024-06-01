@@ -1,40 +1,30 @@
-## 向 Websole 贡献提交
+## Contribute
 
-欢迎! 很高兴你愿意让这个项目变得更好, 你可以通过以下您偏好的方式开始修改代码:
+Welcome! You are welcomed to contribute and make this project better. You can start modifying the code in the following ways you prefer:
 
-### 通过 Codesandbox 在线编辑与提交
+### Edit and submit via codesandbox online
+1. Go to [Codesandbox](https://codesandbox.io/): [Project Link](https://codesandbox.io/s/github/jackzzs/websole/tree/main)
+2. Click on `Fork` button in the upper right corner to launch a development environment.
+3. Wait for the project setup tasks to finish.
+4. Modify the code, then click the console icon, select `Run websole with bash` and `Run pytest` in the command list to test your code.
+5. You can also click the `VS Code` button at the top right corner to open the project in vscode.
+6. Click on the Github icon to push to your personal repository.
+7. Submit a new pull request at [Pull Requests](https://github.com/jackzzs/websole/pulls).
 
-1. 进入 [Codesandbox](https://codesandbox.io/): [项目链接](https://codesandbox.io/s/github/jackzzs/websole/tree/main)
-2. 点击右侧分栏的 `Terminal`, 点击 `Fork and convert`, 以启动一个云编辑器.
-3. 在新建的项目中, 等待项目依赖安装完成.
-4. 修改代码, 点击右侧命令列表中的命令, 即可查看效果.
-5. 您也可以点击右上角的 `VS Code` 按钮, 以查看 `VS Code` 链接到[Codesandbox](https://codesandbox.io/) 的方法.
-6. 点击最左侧文件树上方的 Git 图标, 即可 Push 到个人仓库.
-7. 在 [Pull Requests](https://github.com/jackzzs/websole/pulls) 提交新 Pull Request.
+### Edit and submit by setting up a local development environment
 
-### 搭建本地开发环境编辑与提交
+1. Fork this repository.
+2. Clone the forked repository to your local machine using `git clone <forked repo>`.
+3. Set up a source-based build:
 
-1. Fork 本仓库
-2. 通过 `git clone <forked repo>` 以将仓库克隆到本地
-3. 启用一个虚拟空间, 例如:
+```bash
+make develop
+```
 
-   ```bash
-   python -m venv .venv
-   . .venv/bin/activate
-   ```
+4. Modify code, and run the following command to test your code:
 
-4. 安装项目为可编辑模式:
+```bash
+make run
+```
 
-   ```bash
-   pip install -e .
-   ```
-
-5. 修改代码以实现需求
-6. 在提交 Pull Request 前, 请使用 `pre-commit` 工具检查代码:
-
-   ```bash
-   pre-commit run -a
-   tox -e py
-   ```
-
-7. 在 [Pull Requests](https://github.com/jackzzs/websole/pulls) 提交新 Pull Request.
+5. Commit to the fork, and submit a new pull request at [Pull Requests](https://github.com/jackzzs/websole/pulls).

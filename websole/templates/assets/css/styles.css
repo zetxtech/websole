@@ -54,3 +54,13 @@
 #restart-btn {
   cursor: pointer;
 }
+
+@media (max-width: 576px) {
+  #brand-text{
+    font-size: 20px;
+  }
+  .navbar-toggler-icon {
+    width: 1em;
+    height: 1em;
+  }
+}

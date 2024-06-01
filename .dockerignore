@@ -1,3 +1,8 @@
+# Config files
+*.yml
+*.yaml
+!examples/config.yml
+
 # Git
 .git
 .gitignore
@@ -128,6 +133,7 @@ celerybeat.pid
 .env
 .venv
 env/
+/conda/
 venv/
 ENV/
 env.bak/
