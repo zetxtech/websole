@@ -91,6 +91,7 @@ def get_template_kws():
         "useShortcut": app.config["use_shortcut"],
         "hideUseShortcutSwitch": app.config["hide_use_shortcut_switch"],
         "whatIsWebpassUrl": app.config["what_is_webpass_url"],
+        "hasPassword": bool(app.config["webpass"]),
     }
 
 
@@ -212,6 +213,7 @@ def read_and_forward_pty_output():
         else:
             break
 
+
 def disconnect_on_proc_exit(proc: Popen):
     returncode = proc.wait()
     if proc == app.config["proc"]:
@@ -223,19 +225,17 @@ def disconnect_on_proc_exit(proc: Popen):
         app.config["hist"] += output
         socketio.emit("pty-output", {"output": output}, namespace="/pty")
 
+
 def start_proc():
     master_fd, slave_fd = pty.openpty()
-    p = Popen(
-        app.config["command"], stdin=slave_fd, stdout=slave_fd, stderr=slave_fd, preexec_fn=os.setsid
-    )
+    p = Popen(app.config["command"], stdin=slave_fd, stdout=slave_fd, stderr=slave_fd, preexec_fn=os.setsid)
     socketio.start_background_task(target=disconnect_on_proc_exit, proc=p)
     atexit.register(exit_handler)
     app.config["fd"] = master_fd
     app.config["proc"] = p
-    logger.debug(
-        f"Commond started at: {p.pid} ({truncate_str(shlex.join(app.config['command']), 20)})."
-    )
+    logger.debug(f"Commond started at: {p.pid} ({truncate_str(shlex.join(app.config['command']), 20)}).")
     socketio.start_background_task(target=read_and_forward_pty_output)
+
 
 @socketio.on("cmd_run", namespace="/pty")
 def run(data):
@@ -249,6 +249,7 @@ def run(data):
         else:
             start_proc()
             set_size(app.config["fd"], data["rows"], data["cols"])
+
 
 def kill_proc(proc: Popen):
     proc.send_signal(signal.SIGINT)

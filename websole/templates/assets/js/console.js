@@ -1,4 +1,4 @@
-window.addEventListener('DOMContentLoaded', function() {
+function initConsole() {
     const term = new Terminal({
         cursorBlink: false,
         macOptionIsMeta: true,
@@ -122,6 +122,12 @@ window.addEventListener('DOMContentLoaded', function() {
         }
         return true;
     }
-
     term.attachCustomKeyEventHandler(customKeyEventHandler);
-});
+}
+if (document.readyState !== 'loading') {
+    initConsole();
+} else {
+    document.addEventListener('DOMContentLoaded', function() {
+        initConsole();
+    });
+}
