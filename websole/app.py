@@ -418,7 +418,7 @@ def main(
         "--webpass",
         envvar="_WEB_PASS",
         show_envvar=False,
-        help="Password for login to web console.",
+        help="Password for logging into the web console.",
     ),
     brand: str = typer.Option(
         None,
@@ -427,10 +427,10 @@ def main(
         show_envvar=False,
         help="Brand to be shown in web console header.",
     ),
-    icons: List[str] = typer.Option([], "--icon", "-i", help="Icons to be shown in web console footer."),
-    links: List[str] = typer.Option([], "--link", "-l", help="Links to be shown in web console footer."),
+    icons: List[str] = typer.Option([], "--icon", help="Icons to be shown in web console footer."),
+    links: List[str] = typer.Option([], "--link", help="Links to be shown in web console footer."),
     config: Path = typer.Option(
-        "config.yml",
+        "websole.yml",
         "--config",
         envvar="_WEB_CONFIG",
         show_envvar=False,

@@ -1,0 +1,8 @@
+version: '3'
+services:
+  websole:
+    container_name: websole
+    build: .
+    restart: unless-stopped
+    ports:
+      - 80:1818
