@@ -10,9 +10,9 @@ Websole is a web-based console for you to expose command-line tools to a web ser
 
 ## Screenshot
 
-![](https://github.com/jackzzs/websole/raw/main/images/example_console.png)
+<img src="https://github.com/jackzzs/websole/raw/main/images/example_console.png" alt="console page" width="600"/>
 
-![](https://github.com/jackzzs/websole/raw/main/images/example_login.png)
+<img src="https://github.com/jackzzs/websole/raw/main/images/example_login.png" alt="login page" width="600"/>
 
 ## Install
 
