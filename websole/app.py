@@ -349,10 +349,12 @@ def configure(dry=False, **kw):
     else:
         app.config.update(kw)
 
+
 def terminate(signal, frame, server: WebSocketServer):
-  logger.info("Server shutting down due to termination signal.")
-  server.stop()
-  sys.exit(0)
+    logger.info("Server shutting down due to termination signal.")
+    server.stop()
+    sys.exit(0)
+
 
 def serve():
     from geventwebsocket import WebSocketServer
@@ -367,7 +369,7 @@ def serve():
 
     server = WebSocketServer((host, port), app)
     logger.info(f"Web console started at {host}:{port}.")
-    
+
     try:
         signal.signal(signal.SIGTERM, partial(terminate, server=server))
         server.serve_forever()
@@ -379,6 +381,7 @@ def serve():
         time.sleep(3)
         logger.info(f"Server shutting down due to unknown error: {e}")
         sys.exit(1)
+
 
 class TyperCommand(typer.core.TyperCommand):
     def get_usage(self, ctx) -> str:
