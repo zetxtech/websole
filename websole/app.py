@@ -1,9 +1,12 @@
-import atexit
-from xmlrpc.client import Boolean
+from __future__ import annotations
+
 from gevent import monkey
 
 monkey.patch_all()
 
+import atexit
+from functools import partial
+import sys
 import threading
 from datetime import datetime
 import json
@@ -17,7 +20,7 @@ import struct
 import termios
 import time
 import signal
-from typing import List
+from typing import TYPE_CHECKING, List
 from subprocess import Popen
 
 import yaml
@@ -29,6 +32,9 @@ from flask_socketio import SocketIO
 from flask_login import LoginManager, login_user, logout_user, current_user
 
 from . import __version__
+
+if TYPE_CHECKING:
+    from geventwebsocket import WebSocketServer
 
 logger.disable("websole")
 
@@ -303,11 +309,11 @@ def check_config(config: dict):
                     }
                 )
             ],
-            Optional("allow_restart"): Boolean,
-            Optional("use_shortcut"): Boolean,
-            Optional("hide_use_shortcut_switch"): Boolean,
+            Optional("allow_restart"): bool,
+            Optional("use_shortcut"): bool,
+            Optional("hide_use_shortcut_switch"): bool,
             Optional("what_is_webpass_url"): str,
-            Optional("start"): Boolean,
+            Optional("start"): bool,
         }
     )
     try:
@@ -343,6 +349,10 @@ def configure(dry=False, **kw):
     else:
         app.config.update(kw)
 
+def terminate(signal, frame, server: WebSocketServer):
+  logger.info("Server shutting down due to termination signal.")
+  server.stop()
+  sys.exit(0)
 
 def serve():
     from geventwebsocket import WebSocketServer
@@ -355,14 +365,20 @@ def serve():
             f"Web console host set to 0.0.0.0 and will listen on all interfaces, please pay attention to security issues."
         )
 
+    server = WebSocketServer((host, port), app)
     logger.info(f"Web console started at {host}:{port}.")
+    
     try:
-        WebSocketServer((host, port), app).serve_forever()
+        signal.signal(signal.SIGTERM, partial(terminate, server=server))
+        server.serve_forever()
     except KeyboardInterrupt:
         logger.info("Server shutting down due to keyboard signal.")
-    except:
-        logger.info("Server shutting down due to unknown error.")
-
+        server.stop()
+        sys.exit(0)
+    except Exception as e:
+        time.sleep(3)
+        logger.info(f"Server shutting down due to unknown error: {e}")
+        sys.exit(1)
 
 class TyperCommand(typer.core.TyperCommand):
     def get_usage(self, ctx) -> str:
