@@ -28,7 +28,7 @@ This will expose a terminal running `bash` on port 80.
 
 You can use websole as a base docker image, to expose your program.
 
-See the `example` directory for examples.
+See the `examples` [directory](https://github.com/jackzzs/websole/tree/main/examples) for examples.
 
 # Commandline options
 
