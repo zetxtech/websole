@@ -342,7 +342,7 @@ def configure(dry=False, **kw):
     for k, v in default_config.items():
         kw.setdefault(k, v)
     if not kw["links"]:
-        kw["links"].append({"label": "Powered by Websole", "url": "https://github.com/jackzzs/websole/"})
+        kw["links"].append({"label": "Powered by Websole", "url": "https://github.com/zetxtech/websole/"})
     if dry:
         print(json.dumps(kw))
         exit(0)
@@ -463,7 +463,7 @@ def main(
 ):
     """
     Websole is a tool to expose command-line tools through web-based console.
-    See: https://github.com/jackzzs/websole
+    See: https://github.com/zetxtech/websole
     """
 
     logger.enable("websole")

@@ -2,9 +2,9 @@ command: "/app/your-program.sh"
 host: 0.0.0.0
 brand: Your Program
 links:
-  - url: https://github.com/jackzzs/websole
+  - url: https://github.com/zetxtech/websole
     label: Github
   - url: https://websole.onrender.com
     label: Example
 webpass: 123456
-what_is_webpass_url: https://github.com/jackzzs/websole
+what_is_webpass_url: https://github.com/zetxtech/websole

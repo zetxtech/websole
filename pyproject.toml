@@ -42,7 +42,7 @@ dependencies = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/jackzzs/websole"
+Homepage = "https://github.com/zetxtech/websole"
 
 [project.readme]
 file = "README.md"

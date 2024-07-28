@@ -10,9 +10,9 @@ Websole is a web-based console for you to expose command-line tools to a web ser
 
 ## Screenshot
 
-<img src="https://github.com/jackzzs/websole/raw/main/images/example_console.png" alt="console page" width="600"/>
+<img src="https://github.com/zetxtech/websole/raw/main/images/example_console.png" alt="console page" width="600"/>
 
-<img src="https://github.com/jackzzs/websole/raw/main/images/example_login.png" alt="login page" width="600"/>
+<img src="https://github.com/zetxtech/websole/raw/main/images/example_login.png" alt="login page" width="600"/>
 
 ## Install
 
@@ -28,7 +28,7 @@ This will expose a terminal running `bash` on port 80.
 
 You can use websole as a base docker image, to expose your program.
 
-See the `examples` [directory](https://github.com/jackzzs/websole/tree/main/examples) for examples.
+See the `examples` [directory](https://github.com/zetxtech/websole/tree/main/examples) for examples.
 
 # Commandline options
 
@@ -68,7 +68,7 @@ brand: Your Program
 # Link to be shown in web console footer.
 links:
   - label: Github
-    url: https://github.com/jackzzs/websole
+    url: https://github.com/zetxtech/websole
   - label: Example
     url: https://websole.onrender.com
 
@@ -76,7 +76,7 @@ links:
 # icon names can be found from https://icons.getbootstrap.com/
 icons:
   - icon: bi-github
-    url: https://github.com/jackzzs/websole
+    url: https://github.com/zetxtech/websole
   - icon: bi-fire
     url: https://websole.onrender.com
 
@@ -87,7 +87,7 @@ webpass: 123456
 start: yes
 
 # URL for "What is web console password?" link on the login page.
-what_is_webpass_url: https://github.com/jackzzs/websole
+what_is_webpass_url: https://github.com/zetxtech/websole
 
 # Allow users to restart the program through the refresh button in the upper right corner of the console.
 allow_restart: yes

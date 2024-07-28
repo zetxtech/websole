@@ -9,7 +9,7 @@ Welcome! You are welcomed to contribute and make this project better. You can st
 4. Modify the code, then click the console icon, select `Run websole with bash` and `Run pytest` in the command list to test your code.
 5. You can also click the `VS Code` button at the top right corner to open the project in vscode.
 6. Click on the Github icon to push to your personal repository.
-7. Submit a new pull request at [Pull Requests](https://github.com/jackzzs/websole/pulls).
+7. Submit a new pull request at [Pull Requests](https://github.com/zetxtech/websole/pulls).
 
 ### Edit and submit by setting up a local development environment
 
@@ -27,4 +27,4 @@ make develop
 make run
 ```
 
-5. Commit to the fork, and submit a new pull request at [Pull Requests](https://github.com/jackzzs/websole/pulls).
+5. Commit to the fork, and submit a new pull request at [Pull Requests](https://github.com/zetxtech/websole/pulls).
